@@ -84,6 +84,11 @@ public class RecipeServiceImpl implements RecipeService{
         opUser.get()
         );
 
+        if(recipeDTO.isPersonal() != null){
+            recipe.setPersonal(recipeDTO.isPersonal());
+        } else {
+            recipe.setPersonal(true);
+        }
 
         //save recipe
         Recipe savedRecipe = recipeRepository.save(recipe);

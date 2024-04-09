@@ -6,6 +6,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.redvelvet.redvelvet.business.entities.RecipeCategory;
@@ -69,9 +72,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
-    //Fatla adiiconar fotos
     @Override
-    public List<SimpleRecipeDTO> getRecipesFromCategory(String name, Long userId) {
+    public Page<SimpleRecipeDTO> getRecipesFromCategory(String name, Long userId, int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
 
         Optional<RecipeCategory> opCategory = categoryRepository.findByName(name);
 
@@ -81,22 +86,17 @@ public class CategoryServiceImpl implements CategoryService {
 
         RecipeCategory category = opCategory.get();
 
-        List<Recipe> recipes = category.getRecipes();
+        Page<Recipe> recipePage = recipeRepository.findByCategory(category, pageable);
 
-        List<SimpleRecipeDTO> recipeDTOs = new ArrayList<>();
-
-        for(Recipe recipe : recipes){
-
+        return recipePage.map(recipe -> {
             String mainImage = imageProcessingUtil.getMainFileName(recipe.getMainImage()).get(0);
-
             User recipeCreator = recipe.getCreator();
-
-            if(userId.equals(recipeCreator.getId()) || !recipe.isPersonal()){
-                recipeDTOs.add(new SimpleRecipeDTO(recipe.getName(), recipe.getId(), mainImage));
+            if (userId.equals(recipeCreator.getId()) || !recipe.isPersonal()) {
+                return new SimpleRecipeDTO(recipe.getName(), recipe.getId(), mainImage);
+            } else {
+                return null; // Skip this recipe if it doesn't meet the criteria
             }
-        }
-
-        return recipeDTOs;
+        });
 
     }
 

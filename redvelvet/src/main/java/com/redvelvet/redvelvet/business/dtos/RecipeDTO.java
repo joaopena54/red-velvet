@@ -14,9 +14,11 @@ public class RecipeDTO {
     private List<String> categories;
     private List<String> imagesUrls;
     private String mainImage;
+    private Boolean isPersonal;
 
     public RecipeDTO(){
 
+        
     }
 
     public Long getId(){
@@ -85,5 +87,13 @@ public class RecipeDTO {
 
     public String getMainImage(){
         return mainImage;
+    }
+
+    public void setPersonal(boolean isPersonal){
+        this.isPersonal = isPersonal;
+    }   
+
+    public Boolean isPersonal(){
+        return isPersonal;
     }
 }

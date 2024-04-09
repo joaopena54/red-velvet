@@ -2,6 +2,8 @@ package com.redvelvet.redvelvet.business.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.redvelvet.redvelvet.business.dtos.SimpleRecipeDTO;
 
 public interface CategoryService {
@@ -12,6 +14,6 @@ public interface CategoryService {
 
     public void deleteCategory(String name);
 
-    public List<SimpleRecipeDTO> getRecipesFromCategory(String name, Long userId);
+    public Page<SimpleRecipeDTO> getRecipesFromCategory(String name, Long userId, int pageNo, int pageSize);
 
 }
