@@ -116,7 +116,7 @@ public class RecipeController {
         }
     }
 
-    @GetMapping("/RecipeImages/{recipe}")
+    @GetMapping("{recipe}/RecipeImages")
     public ResponseEntity<?> getRecipeImages(@PathVariable Long recipe){
 
         try {

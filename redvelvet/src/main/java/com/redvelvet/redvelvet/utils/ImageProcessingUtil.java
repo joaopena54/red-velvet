@@ -34,7 +34,8 @@ public class ImageProcessingUtil {
         File directory = new File(directoryPath);
 
         // Create the directory
-        boolean created = directory.mkdirs();
+        //boolean created
+        directory.mkdirs();
 
         //check if created
 
@@ -49,7 +50,7 @@ public class ImageProcessingUtil {
         File directory = new File(directoryPath);
 
         // Create the directory
-        boolean created = directory.mkdirs();
+        directory.mkdirs();
 
         //check if created
 
