@@ -1,28 +1,28 @@
-package com.redvelvet.business.base.entity;
+package com.redvelvet.business.base.entity
+
+import jakarta.persistence.*
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
+import java.time.Instant
 
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.Instant;
-
-public abstract class BaseEntity {
+@MappedSuperclass
+abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "red_velvet_sequence")
-    @SequenceGenerator(name = "red_velvet_sequence", sequenceName = "red_velvet_sequence_id", allocationSize = 50)
-    private long id;
+    @SequenceGenerator(
+        name = "red_velvet_sequence",
+        sequenceName = "red_velvet_sequence_id",
+        allocationSize = 50
+    )
+    var id: Long? = null
 
     @CreationTimestamp
-    private Instant createdDate = Instant.now();
+    @Column(columnDefinition = "DATETIME(6)", nullable = false)
+    var createdDate: Instant = Instant.now()
 
     @UpdateTimestamp
-    private Instant lastModifiedDate;
-
+    @Column(columnDefinition = "DATETIME(6)")
+    var lastModifiedDate: Instant? = null
 }
-
-

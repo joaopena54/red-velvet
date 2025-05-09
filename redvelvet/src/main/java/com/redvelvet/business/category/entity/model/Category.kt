@@ -1,16 +1,15 @@
-package com.redvelvet.business.ingredient.entity.model
+package com.redvelvet.business.category.entity.model
 
-import com.redvelvet.business.base.entity.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import org.jetbrains.annotations.NotNull
 
 @Entity
-class Ingredient : BaseEntity() {
+class Category {
 
     @Column(nullable = false)
     var name: String? = null
 
     @Column(nullable = false)
     var approved: Boolean = false
+
 }

@@ -1,28 +1,32 @@
-package com.redvelvet.business.recipe.entity.model;
+package com.redvelvet.business.recipe.entity.model
 
-import com.redvelvet.business.base.entity.BaseEntity;
-import com.redvelvet.business.ingredient.entity.model.Ingredient;
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
+import com.redvelvet.business.base.entity.BaseEntity
+import com.redvelvet.business.ingredient.entity.model.Ingredient
+import com.redvelvet.business.step.entity.model.Step
+import jakarta.persistence.*
+import jakarta.validation.constraints.NotBlank
+import kotlin.time.Duration
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-public class Recipe extends BaseEntity {
+class Recipe : BaseEntity() {
 
+    @NotBlank
     @Column(nullable = false)
-    private String name;
+    var name: String? = null
 
-    private List<Ingredient> ingredients;
+    @Column(nullable = true)
+    var rating: Int? = null
 
-    @Column(nullable = false)
-    private String description;
+    @Column(nullable = true)
+    var prepareDuration: Duration? = null
+
+    @Column(nullable = true)
+    var link: String? = null
 
     @ElementCollection
-    @CollectionTable(name = "recipe_procedure", joinColumns = @JoinColumn(name = "recipe_id"))
-    private List<String> procedure;
+    @CollectionTable(
+        name = "recipe_procedure",
+        joinColumns = [JoinColumn(name = "recipe_id")]
+    )
+    var procedure: List<Step> = mutableListOf()
 }
